@@ -132,10 +132,15 @@ export function initRadar() {
       }
 
       if (window.inroom === 0) {
-        const xpos = window.pos[0]
-        const ypos = window.pos[1]
-        const dir = window.pos[2]
-        moveCharacter(maya, xpos, ypos, dir, skipTransition ? '0s' : '1s')
+        if (window.stairs === 2) {
+          const { x, y } = floorMap.stairs
+          moveCharacter(maya, x, y, 'N', skipTransition ? '0s' : '1s')
+        } else {
+          const xpos = window.pos[0]
+          const ypos = window.pos[1]
+          const dir = window.pos[2]
+          moveCharacter(maya, xpos, ypos, dir, skipTransition ? '0s' : '1s')
+        }
       } else {
         const room = floorMap.rooms.find(({ room }) => room === window.inroom)
         if (!room) return
@@ -255,6 +260,14 @@ export function initRadar() {
         }
       }, 1)
     }
+    
+    const checkIfJimmyInRoomWithMaya = () => {
+      if(window.jhinroom === window.inroom) {
+        maya.style.opacity = '0.1'
+      } else {
+        maya.style.opacity = '1'
+      }
+    }
 
     onPropertyChange('menon', () => {
       if(window.menon === 0) {
@@ -286,10 +299,12 @@ export function initRadar() {
 
     onPropertyChange('inroom', () => {
       moveMaya()
+      checkIfJimmyInRoomWithMaya()
     })
 
     onPropertyChange('jhinroom', () => {
       moveJimmy()
+      checkIfJimmyInRoomWithMaya()
     })
 
     onPropertyChange('pos', () => {

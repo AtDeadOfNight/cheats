@@ -6,4 +6,5 @@ interface Window {
   jhfloor: number
   jhinroom: number
   menon: 0 | 1
+  stairs: number
 }

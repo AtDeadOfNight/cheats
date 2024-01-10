@@ -1,8 +1,9 @@
 type Room = { room: number, x: number, y: number }
 type Point = { xpos: number, ypos: number, x: number, y: number }
 
-export const floors: { rooms: Room[], points: Point[] }[] = [
+export const floors: { stairs: { x: number, y: number }, rooms: Room[], points: Point[] }[] = [
   {
+    stairs: { x: 792, y: 430 },
     rooms: [
       {
         'room': 105,
@@ -358,6 +359,7 @@ export const floors: { rooms: Room[], points: Point[] }[] = [
     ]
   },
   {
+    stairs: { x: 792, y: 430 },
     rooms: [
       {
         'room': 201,
@@ -707,7 +709,54 @@ export const floors: { rooms: Room[], points: Point[] }[] = [
     ]
   },
   {
-    rooms: [],
+    stairs: { x: 415, y: 199 },
+    rooms: [
+      {
+        'room': 308,
+        'x': 613,
+        'y': 102
+      },
+      {
+        'room': 309,
+        'x': 613,
+        'y': 270
+      },
+      {
+        'room': 301,
+        'x': 81,
+        'y': 339
+      },
+      {
+        'room': 307,
+        'x': 278,
+        'y': 657
+      },
+      {
+        'room': 303,
+        'x': 454,
+        'y': 627
+      },
+      {
+        'room': 306,
+        'x': 542,
+        'y': 600
+      },
+      {
+        'room': 305,
+        'x': 540,
+        'y': 492
+      },
+      {
+        'room': 304,
+        'x': 458,
+        'y': 465
+      },
+      {
+        'room': 302,
+        'x': 322,
+        'y': 529
+      }
+    ],
     points: [
       {
         'xpos': 60,
@@ -792,6 +841,48 @@ export const floors: { rooms: Room[], points: Point[] }[] = [
         'ypos': 21,
         'x': 616,
         'y': 172
+      },
+      {
+        'xpos': 61,
+        'ypos': 14,
+        'x': 357,
+        'y': 581
+      },
+      {
+        'xpos': 62,
+        'ypos': 14,
+        'x': 281,
+        'y': 594
+      },
+      {
+        'xpos': 63,
+        'ypos': 14,
+        'x': 209,
+        'y': 593
+      },
+      {
+        'xpos': 61,
+        'ypos': 15,
+        'x': 374,
+        'y': 554
+      },
+      {
+        'xpos': 60,
+        'ypos': 16,
+        'x': 458,
+        'y': 535
+      },
+      {
+        'xpos': 59,
+        'ypos': 16,
+        'x': 537,
+        'y': 535
+      },
+      {
+        'xpos': 61,
+        'ypos': 16,
+        'x': 374,
+        'y': 521
       }
     ]
   }
