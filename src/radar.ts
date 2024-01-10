@@ -12,36 +12,86 @@ export function initRadar() {
     document.body.appendChild(radar)
     radar.appendChild(map)
     map.style.width = '100%'
-    
-    const maya = document.createElement('img')
-    const jimmy = document.createElement('img')
-    maya.src = 'cheats/assets/maya.png'
-    jimmy.src = 'cheats/assets/jimmy.png'
+
+    const maya = document.createElement('div')
+    const jimmy = document.createElement('div')
+    const mayaImg = document.createElement('img')
+    const jimmyImg = document.createElement('img')
+    mayaImg.src = 'cheats/assets/maya.png'
+    jimmyImg.src = 'cheats/assets/jimmy.png'
+    const mayaDirImg = document.createElement('img')
+    const jimmyDirImg = document.createElement('img')
+    mayaDirImg.src = 'cheats/assets/view-direction.png'
+    jimmyDirImg.src = 'cheats/assets/view-direction.png';
+    ([mayaImg, jimmyImg].forEach(img => {
+      Object.assign(img.style, {
+        width: '100%',
+        height: 'auto'
+      })
+    }));
+    ([mayaDirImg, jimmyDirImg]).forEach(element => {
+      Object.assign(element.style, {
+        transition: 'transform 1s'
+      })
+      element.className = 'view-direction'
+    })
+    maya.appendChild(mayaImg)
+    maya.appendChild(mayaDirImg)
+    jimmy.appendChild(jimmyDirImg)
+    jimmy.appendChild(jimmyImg)
     radar.appendChild(maya)
     radar.appendChild(jimmy)
-    maya.style.position = 'absolute'
-    maya.style.top = '-999px'
-    maya.style.left = '-999px'
-    maya.style.zIndex = '1001'
-    maya.style.transform = 'translate(-50%, -50%)'
-    maya.style.transition = 'left 1s, top 1s'
-    jimmy.style.position = 'absolute'
-    jimmy.style.top = '-999px'
-    jimmy.style.left = '-999px'
-    jimmy.style.zIndex = '1001'
-    jimmy.style.transform = 'translate(-50%, -50%)'
-    jimmy.style.transition = 'left 1s, top 1s'
+    const imgsContainers = [maya, jimmy]
+    imgsContainers.forEach(container => {
+      Object.assign(container.style, {
+        position: 'absolute',
+        top: '-999px',
+        left: '-999px',
+        zIndex: '1001',
+        transform: 'translate(-50%, -50%)',
+        transition: 'left 1s, top 1s'
+      })
+    })
+
+    const jimmysFloor = document.createElement('div')
+    jimmysFloor.id = 'jimmys-floor'
+    const jimmysFloorIcon = document.createElement('img')
+    const jimmysFloorSpan = document.createElement('span')
+    jimmysFloorIcon.src = 'cheats/assets/jimmys-floor.png'
+    jimmysFloorIcon.style.height = '25px'
+    jimmysFloorSpan.innerText = '0'
+    Object.assign(jimmysFloor.style, {
+      display: 'none',
+      alignItems: 'center',
+      gap: '8px',
+      position: 'absolute',
+      right: '0px',
+      bottom: '0px',
+      font: 'bold 24px sans-serif',
+    })
+    jimmysFloor.append(jimmysFloorIcon)
+    jimmysFloor.append(jimmysFloorSpan)
+    radar.append(jimmysFloor)
 
     const changeFloors = () => {
       if (window.floor >= 2) {
         map.src = `cheats/assets/map/floor-${window.floor - 1}.png`
         radar.style.display = 'block'
+
+        if (window.floor !== window.jhfloor) {
+          jimmy.style.display = 'none'
+          jimmysFloor.style.display = 'flex'
+          jimmysFloorSpan.innerText = String(window.jhfloor - 1)
+        } else {
+          jimmy.style.display = 'block'
+          jimmysFloor.style.display = 'none'
+        }
       } else {
         radar.style.display = 'none'
       }
     }
 
-    const moveCharacter = (character, xpos, ypos, speed) => {
+    const moveCharacter = (character: HTMLElement, xpos: number, ypos: number, dir: 'N' | 'S' | 'W' | 'E', speed) => {
       const floorMap = floors[window.floor - 2]
       if (!floorMap) {
         return
@@ -64,6 +114,10 @@ export function initRadar() {
         }
         character.style.left = `${x}px`
         character.style.top = `${y}px`
+        const viewDirectionDir = { 'N': 90, 'E': 180, 'W': 0, 'S': -90 }[dir]
+        const dirAngle = character.querySelector('.view-direction') as HTMLElement
+        if (dirAngle)
+          dirAngle.style.transform = `translate(-50%, -50%) rotate(${viewDirectionDir}deg)`
         if (isOutOfMap) {
           setTimeout(() => character.style.transition = `left ${speed}, top ${speed}`, 5)
         }
@@ -80,7 +134,7 @@ export function initRadar() {
         const xpos = window.pos[0]
         const ypos = window.pos[1]
         const dir = window.pos[2]
-        moveCharacter(maya, xpos, ypos, skipTransition ? '0s' : '1s')
+        moveCharacter(maya, xpos, ypos, dir, skipTransition ? '0s' : '1s')
       } else {
         const room = floorMap.rooms.find(({ room }) => room === window.inroom)
         if (!room) return
@@ -91,14 +145,28 @@ export function initRadar() {
     }
 
     const moveJimmy = (skipTransition = false) => {
-      const xpos = Number(window.jmop[0].slice(0,2))
-      const ypos = Number(window.jmop[0].slice(2,4))
-      const dir = window.jmop[1]
-      moveCharacter(jimmy, xpos, ypos, skipTransition ? '0s' : '0.5s')
+      const floorMap = floors[window.floor - 2]
+      if (!floorMap) {
+        return
+      }
+
+      if (window.jhinroom === 0) {
+        const xpos = Number(window.jmop[0].slice(0,2))
+        const ypos = Number(window.jmop[0].slice(2,4))
+        const dir = window.jmop[1]
+        moveCharacter(jimmy, xpos, ypos, dir, skipTransition ? '0s' : '0.5s')
+      } else {
+        const room = floorMap.rooms.find(({ room }) => room === window.jhinroom)
+        if (!room) return
+        const { x, y } = calculatePosition(room.x, room.y)
+        jimmy.style.left = `${x}px`
+        jimmy.style.top = `${y}px`
+      }
     }
 
     let currentRadarScale = 'mini'
     const scaleRadar = (level: 'hide' | 'mini' | 'full') => {
+      if (window.floor < 2) return
       currentRadarScale = level
       jimmy.style.transition = 'left 0s, top 0s'
       maya.style.transition = 'left 0s, top 0s'
@@ -118,7 +186,25 @@ export function initRadar() {
           map.style.transform = 'translateX(-50%)'
 
           maya.style.width = 'auto'
-          maya.style.height = '5%'
+          maya.style.height = '5%';
+
+          ([mayaImg, jimmyImg].forEach(img => {
+            Object.assign(img.style, {
+              width: 'auto',
+              height: '100%'
+            })
+          }));
+
+          ([mayaDirImg, jimmyDirImg]).forEach(element => {
+            Object.assign(element.style, {
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              width: 'auto',
+              height: '200%',
+              transform: 'translate(-50%, -50%)'
+            })
+          })
 
           jimmy.style.width = 'auto'
           jimmy.style.height = '5%'
@@ -139,7 +225,25 @@ export function initRadar() {
           map.style.transform = ''
 
           maya.style.width = '5%'
-          maya.style.height = 'auto'
+          maya.style.height = 'auto';
+
+          ([mayaImg, jimmyImg].forEach(img => {
+            Object.assign(img.style, {
+              width: '100%',
+              height: 'auto'
+            })
+          }));
+
+          ([mayaDirImg, jimmyDirImg]).forEach(element => {
+            Object.assign(element.style, {
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              width: '200%',
+              height: 'auto',
+              transform: 'translate(-50%, -50%)'
+            })
+          })
 
           jimmy.style.width = '5%'
           jimmy.style.height = 'auto'
@@ -169,8 +273,16 @@ export function initRadar() {
       changeFloors()
     })
 
+    onPropertyChange('jhfloor', () => {
+      changeFloors()
+    })
+
     onPropertyChange('inroom', () => {
       moveMaya()
+    })
+
+    onPropertyChange('jhinroom', () => {
+      moveJimmy()
     })
 
     onPropertyChange('pos', () => {

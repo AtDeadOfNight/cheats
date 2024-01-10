@@ -218,6 +218,12 @@ export const floors: { rooms: Room[], points: Point[] }[] = [
         'y': 514
       },
       {
+        'xpos': 0,
+        'ypos': 0,
+        'x': 668,
+        'y': 514
+      },
+      {
         'xpos': 23,
         'ypos': 20,
         'x': 529,
@@ -361,6 +367,12 @@ export const floors: { rooms: Room[], points: Point[] }[] = [
         'y': 506
       },
       {
+        'xpos': 0,
+        'ypos': 0,
+        'x': 664,
+        'y': 506
+      },
+      {
         'xpos': 41,
         'ypos': 20,
         'x': 789,
@@ -416,6 +428,12 @@ export const floors: { rooms: Room[], points: Point[] }[] = [
       {
         'xpos': 62,
         'ypos': 20,
+        'x': 307,
+        'y': 254
+      },
+      {
+        'xpos': 0,
+        'ypos': 0,
         'x': 307,
         'y': 254
       },
