@@ -24,7 +24,7 @@ Unofficial At Dead of Night game cheats.
 
 <img width="1452" alt="image" src="https://github.com/AtDeadOfNight/cheats/assets/59040542/2b732440-cf95-458b-bd5a-61c7e6401738">
 
-Minimap that helps you keep track your's and Jimmy's position on current floor.
+Minimap that helps you keep track your's and Jimmy's position and sight direction on current floor. Shows friends that are not rescued yet. Shows Jimmy's floor if it's not the same. Shows whether Jimmy is in the same room with you or left.
 
 Controls:
 Press `-` key to make it smaller or hide
