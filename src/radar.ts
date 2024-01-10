@@ -92,13 +92,15 @@ export function initRadar() {
       }
     }
 
-    const moveCharacter = (character: HTMLElement, xpos: number, ypos: number, dir: 'N' | 'S' | 'W' | 'E', speed) => {
+    const moveCharacter = (character: HTMLElement, xpos: number | 'stairs', ypos: number | 'stairs', dir: 'N' | 'S' | 'W' | 'E', speed) => {
       const floorMap = floors[window.floor - 2]
       if (!floorMap) {
         return
       }
 
-      const point = floorMap.points.find(point => point.xpos === xpos && point.ypos === ypos)
+      const point = xpos === 'stairs' || ypos === 'stairs' 
+        ? floorMap.stairs
+        : floorMap.points.find(point => point.xpos === xpos && point.ypos === ypos)
       if (!point) {
         console.error('Couldn\'t find point with coordinates' + `${xpos},${ypos}`)
         character.style.transition = 'left 0s, top 0s'
@@ -133,8 +135,7 @@ export function initRadar() {
 
       if (window.inroom === 0) {
         if (window.stairs === 2) {
-          const { x, y } = floorMap.stairs
-          moveCharacter(maya, x, y, 'N', skipTransition ? '0s' : '1s')
+          moveCharacter(maya, 'stairs', 'stairs', 'N', skipTransition ? '0s' : '1s')
         } else {
           const xpos = window.pos[0]
           const ypos = window.pos[1]
@@ -262,7 +263,7 @@ export function initRadar() {
     }
     
     const checkIfJimmyInRoomWithMaya = () => {
-      if(window.jhinroom === window.inroom) {
+      if (window.inroom !== 0 && window.jhinroom === window.inroom) {
         maya.style.opacity = '0.1'
       } else {
         maya.style.opacity = '1'
