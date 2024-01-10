@@ -13,20 +13,52 @@
     </style>
   </head>
   <body style="margin: 0">
-    <img src="src/assets/map/firstfloor.png" onClick="point(event)" />
+    <!-- <img src="src/assets/map/floor-1.png" onClick="pointRoom(event)" /> -->
+    <img src="src/assets/map/floor-1.png" onClick="pointPos(event)" />
+    <!-- <img src="src/assets/map/floor-2.png" onClick="pointRoom(event)" /> -->
+    <!-- <img src="src/assets/map/floor-2.png" onClick="pointPos(event)" /> -->
+    <!-- <img src="src/assets/map/floor-3.png" onClick="pointRoom(event)" /> -->
+    <!-- <img src="src/assets/map/floor-3.png" onClick="pointPos(event)" /> -->
 
     <script>
+      function addPoint(x, y, label) {
+        const point = document.createElement("div")
+        point.className = "point"
+        point.style.left = x + "px"
+        point.style.top = y + "px"
+        const labelEl = document.createElement("span")
+        labelEl.innerText = label
+        labelEl.style.backgroundColor = '#eee'
+        labelEl.style.font = '12px sans-serif'
+        labelEl.style.position = 'absolute'
+        labelEl.style.bottom = '110%'
+        labelEl.style.left = '50%'
+        labelEl.style.transform = 'translateX(-50%)'
+        point.appendChild(labelEl)
+        document.body.appendChild(point)
+      }
+
       window.points = []
-      function point(event) {
+      function pointRoom(event) {
         const room = prompt('Room number')
         var x = event.pageX;
         var y = event.pageY;
-        const point = document.createElement("div");
-        point.className = "point";
-        point.style.left = x + "px";
-        point.style.top = y + "px";
-        document.body.appendChild(point);
+        addPoint(x, y, room)
         points.push({ room, x, y })
+      }
+      function pointPos(event) {
+        const [xpos,ypos] = prompt('XPOS,YPOS').split(',')
+        var x = event.pageX
+        var y = event.pageY
+        addPoint(x, y, `${xpos},${ypos}`)
+        points.push({ xpos: Number(xpos), ypos: Number(ypos), x, y })
+      }
+
+      function importPoints(points) {
+        points.forEach(({ x, y, ...rest }) => {
+          if(rest.room) addPoint(x, y, rest.room)
+          else if(rest.xpos) addPoint(x, y, `${rest.xpos},${rest.ypos}`)
+        })
       }
     </script>
   </body>

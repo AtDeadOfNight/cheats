@@ -12,7 +12,8 @@ Unofficial At Dead of Night game cheats.
 2. Copy `cheats` to `package.nw` directory in At Dead of Night game's files
 3. Add `<script type="text/javascript" charset="utf-8" src="cheats/connector.js"></script>` before `</html>` to `package.nw/index.html` file in At Dead of Night game's files
 4. Open At Dead of Night, all cheats must apear now
-5. If you ever want to **disable cheats**, simply remove `cheats` directory from `package.nw` directory
+- If you ever want to **disable all cheats**, simply remove `cheats` directory from `package.nw` directory
+- If you want to **disable some cheats**, simply navigate to `cheats/connector.js` file, go to the end of the file and find functions invokatings like `initRadar()` and others. Prepend every line with cheat you do not want to appear in the game with `//`. For example, if you leave `// initRadar()` in connector.js, Radar will not appear in the game after next launch.
 
 ## Radar
 
