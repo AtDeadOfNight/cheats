@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <style>
+      .point {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background-color: red;
+        border-radius: 50%;
+        z-index: 2;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body style="margin: 0">
+    <img src="src/assets/map/firstfloor.png" onClick="point(event)" />
+
+    <script>
+      window.points = []
+      function point(event) {
+        const room = prompt('Room number')
+        var x = event.pageX;
+        var y = event.pageY;
+        const point = document.createElement("div");
+        point.className = "point";
+        point.style.left = x + "px";
+        point.style.top = y + "px";
+        document.body.appendChild(point);
+        points.push({ room, x, y })
+      }
+    </script>
+  </body>
+</html>
