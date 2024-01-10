@@ -119,6 +119,31 @@ export const floors: { stairs: { x: number, y: number }, rooms: Room[], points: 
         'room': 114,
         'x': 1080,
         'y': 806
+      },
+      {
+        'room': 450,
+        'x': 935,
+        'y': 607
+      },
+      {
+        'room': 458,
+        'x': 1526,
+        'y': 402
+      },
+      {
+        'room': 462,
+        'x': 1144,
+        'y': 644
+      },
+      {
+        'room': 451,
+        'x': 836,
+        'y': 1127
+      },
+      {
+        'room': 461,
+        'x': 439,
+        'y': 779
       }
     ],
     points: [
@@ -475,6 +500,36 @@ export const floors: { stairs: { x: number, y: number }, rooms: Room[], points: 
         'room': 221,
         'x': 1501,
         'y': 292
+      },
+      {
+        'room': 463,
+        'x': 435,
+        'y': 769
+      },
+      {
+        'room': 460,
+        'x': 944,
+        'y': 610
+      },
+      {
+        'room': 465,
+        'x': 1529,
+        'y': 396
+      },
+      {
+        'room': 455,
+        'x': 1116,
+        'y': 651
+      },
+      {
+        'room': 453,
+        'x': 1232,
+        'y': 773
+      },
+      {
+        'room': 456,
+        'x': 815,
+        'y': 1165
       }
     ],
     points: [
@@ -755,6 +810,16 @@ export const floors: { stairs: { x: number, y: number }, rooms: Room[], points: 
         'room': 302,
         'x': 322,
         'y': 529
+      },
+      {
+        'room': 457,
+        'x': 524,
+        'y': 335
+      },
+      {
+        'room': 464,
+        'x': 365,
+        'y': 674
       }
     ],
     points: [

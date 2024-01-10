@@ -74,7 +74,35 @@ export function initRadar() {
     jimmysFloor.append(jimmysFloorSpan)
     radar.append(jimmysFloor)
 
+    const friends: HTMLDivElement[] = []
+    const createFriends = () => {
+      for (let i = 0; i < 5; i++) {
+        const friend = document.createElement('div')
+        const friendImg = document.createElement('img')
+        friendImg.src = 'cheats/assets/maya-friend.svg'
+        Object.assign(friendImg.style, {
+          opacity: '0.75',
+          width: '100%',
+          height: '100%'
+        })
+        Object.assign(friend.style, {
+          position: 'absolute',
+          top: '-999px',
+          left: '-999px',
+          zIndex: '1001',
+          transform: 'translate(-50%, -50%)'
+        })
+        friend.appendChild(friendImg)
+        radar.appendChild(friend)
+        friend.className = 'friend'
+        friends.push(friend)
+      }
+    }
+
+    createFriends()
+
     const changeFloors = () => {
+      moveFriends()
       if (window.floor >= 2) {
         map.src = `cheats/assets/map/floor-${window.floor - 1}.png`
         radar.style.display = 'block'
@@ -82,7 +110,7 @@ export function initRadar() {
         if (window.floor !== window.jhfloor) {
           jimmy.style.display = 'none'
           jimmysFloor.style.display = 'flex'
-          jimmysFloorSpan.innerText = window.jhfloor === 5 ? '--' : String(window.jhfloor - 1)
+          jimmysFloorSpan.innerText = (window.jhfloor === 5 || window.jhfloor === 0) ? '--' : String(window.jhfloor - 1)
         } else {
           jimmy.style.display = 'block'
           jimmysFloor.style.display = 'none'
@@ -171,6 +199,32 @@ export function initRadar() {
       }
     }
 
+    const moveFriends = () => {
+      const floorMap = floors[window.floor - 2]
+      if (!floorMap) {
+        return
+      }
+
+      const guestRooms = window.guestrooms
+        .filter((_, index) => window.guestsin[index] === 1)
+        .filter(room => floorMap.rooms.some(r => r.room === room))
+        .map(room => floorMap.rooms.find(r => r.room === room)!)
+
+      friends.forEach(friend => {
+        Object.assign(friend.style, {
+          left: '-999px',
+          top: '-999px'
+        })
+      })
+      
+      guestRooms.forEach((friendRoom, index) => {
+        const friendElement = friends[index]
+        const { x, y } = calculatePosition(friendRoom.x, friendRoom.y)
+        friendElement.style.left = `${x}px`
+        friendElement.style.top = `${y}px`
+      })
+    }
+
     let currentRadarScale = 'mini'
     const scaleRadar = (level: 'hide' | 'mini' | 'full') => {
       if (window.floor < 2) return
@@ -215,8 +269,17 @@ export function initRadar() {
 
           jimmy.style.width = 'auto'
           jimmy.style.height = '5%'
+
+          friends.forEach(friend => {
+            Object.assign(friend.style, {
+              width: 'auto',
+              height: '5%'
+            })
+          })
+
           moveMaya(true)
           moveJimmy(true)
+          moveFriends()
         } else if(level === 'mini') {
           radar.style.display = 'block'
           radar.style.width = '300px'
@@ -254,8 +317,17 @@ export function initRadar() {
 
           jimmy.style.width = '5%'
           jimmy.style.height = 'auto'
+
+          friends.forEach(friend => {
+            Object.assign(friend.style, {
+              width: '5%',
+              height: 'auto'
+            })
+          })
+
           moveMaya(true)
           moveJimmy(true)
+          moveFriends()
         } else if(level === 'hide') {
           radar.style.display = 'none'
         }
@@ -314,6 +386,10 @@ export function initRadar() {
 
     onPropertyChange('jmop', () => {
       moveJimmy()
+    })
+
+    onPropertyChange('stairs', () => {
+      moveMaya()
     })
 
     changeFloors()
