@@ -14,8 +14,8 @@
   </head>
   <body style="margin: 0">
     <!-- <img src="src/assets/map/floor-1.png" onClick="pointRoom(event)" /> -->
-    <img src="src/assets/map/floor-1.png" onClick="pointPos(event)" />
-    <!-- <img src="src/assets/map/floor-2.png" onClick="pointRoom(event)" /> -->
+    <!-- <img src="src/assets/map/floor-1.png" onClick="pointPos(event)" /> -->
+    <img src="src/assets/map/floor-2.png" onClick="pointRoom(event)" />
     <!-- <img src="src/assets/map/floor-2.png" onClick="pointPos(event)" /> -->
     <!-- <img src="src/assets/map/floor-3.png" onClick="pointRoom(event)" /> -->
     <!-- <img src="src/assets/map/floor-3.png" onClick="pointPos(event)" /> -->
@@ -40,7 +40,7 @@
 
       window.points = []
       function pointRoom(event) {
-        const room = prompt('Room number')
+        const room = Number(prompt('Room number'))
         var x = event.pageX;
         var y = event.pageY;
         addPoint(x, y, room)

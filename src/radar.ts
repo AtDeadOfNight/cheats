@@ -6,6 +6,7 @@ export function initRadar() {
     const radar = document.createElement('div')
     const map = document.createElement('img')
     radar.id = 'radar-map'
+    radar.style.pointerEvents = 'none'
     radar.style.position = 'relative'
     radar.style.top = '0px'
     radar.style.zIndex = '1000'
@@ -81,7 +82,7 @@ export function initRadar() {
         if (window.floor !== window.jhfloor) {
           jimmy.style.display = 'none'
           jimmysFloor.style.display = 'flex'
-          jimmysFloorSpan.innerText = String(window.jhfloor - 1)
+          jimmysFloorSpan.innerText = window.jhfloor === 5 ? '--' : String(window.jhfloor - 1)
         } else {
           jimmy.style.display = 'block'
           jimmysFloor.style.display = 'none'
@@ -255,7 +256,13 @@ export function initRadar() {
       }, 1)
     }
 
-    scaleRadar('mini')
+    onPropertyChange('menon', () => {
+      if(window.menon === 0) {
+        scaleRadar('mini')
+      } else {
+        scaleRadar('hide')
+      }
+    })
 
     const calculatePosition = (x: number, y: number) => {
       const mapLeft = (radar.offsetWidth - map.offsetWidth) / 2

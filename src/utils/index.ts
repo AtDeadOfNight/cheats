@@ -23,18 +23,18 @@ export function onPropertyChange(name: string, callback: () => void) {
 }
 
 // DISPLAY X/Y POSITION on screen:
-// const positionlabel = document.createElement('span')
-// positionlabel.id = 'position-label'
-// positionlabel.style.zIndex = '1000'
-// positionlabel.style.pointerEvents = 'none'
-// positionlabel.style.position = 'absolute'
-// positionlabel.style.top = '50%'
-// positionlabel.style.left = '50%'
-// positionlabel.style.transform = 'translate(-50%, -50%)'
-// positionlabel.style.font = 'bold 196px monospace'
-// positionlabel.style.color = 'white'
-// positionlabel.style.textShadow = '0 0 10px black'
-// document.body.appendChild(positionlabel)
-// setInterval(() => {
-//   positionlabel.innerText = `${window.pos[0]},${window.pos[1]}`
-// }, 100)
+const positionlabel = document.createElement('span')
+positionlabel.id = 'position-label'
+positionlabel.style.zIndex = '1000'
+positionlabel.style.pointerEvents = 'none'
+positionlabel.style.position = 'absolute'
+positionlabel.style.top = '50%'
+positionlabel.style.left = '50%'
+positionlabel.style.transform = 'translate(-50%, -50%)'
+positionlabel.style.font = 'bold 196px monospace'
+positionlabel.style.color = 'white'
+positionlabel.style.textShadow = '0 0 10px black'
+document.body.appendChild(positionlabel)
+setInterval(() => {
+  positionlabel.innerText = `${window.pos[0]},${window.pos[1]}`
+}, 100)

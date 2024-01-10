@@ -5,4 +5,5 @@ interface Window {
   jmop: [string, 'W' | 'S' | 'E' | 'N']
   jhfloor: number
   jhinroom: number
+  menon: 0 | 1
 }
