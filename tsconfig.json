@@ -7,7 +7,7 @@
       "DOM"
     ],
     "moduleResolution": "node",
-    "outDir": "out",
+    "outDir": "cheats",
     "plugins": [
       {
         "transform": "@zoltu/typescript-transformer-append-js-extension/output/index.js",
@@ -28,7 +28,8 @@
     }
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "src/window.d.ts"
   ],
   "exclude": [
     "node_modules",
