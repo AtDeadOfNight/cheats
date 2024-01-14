@@ -1,4 +1,5 @@
-type Item = {
+export type Item = {
+  index: number
   // Technical internal code for this item
   code: string
   obtained: boolean
@@ -22,9 +23,10 @@ type Item = {
 export function getItemsList() {
   return Array(Math.ceil(window.itemlist.length / 3)).fill(null).map((_, index) => index * 3)
     .map(begin => window.itemlist.slice(begin, begin + 3))
-    .map(itemListItem => {
+    .map((itemListItem, itemListItemIndex) => {
       const [inventorySlot, code, item] = itemListItem as [number, string, object]
       return {
+        index: itemListItemIndex,
         code,
         obtained: inventorySlot > 0,
         ...(inventorySlot > 0 && { inventorySlot }),
