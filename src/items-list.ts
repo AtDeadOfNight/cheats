@@ -33,26 +33,43 @@ export function initItemsList() {
     itemsListContainer.appendChild(list)
     document.body.appendChild(itemsListContainer)
 
+    let itemsListVisible = false
+    let showing: 'items' | 'keys' = 'items'
+
     const updateItemsList = () => {
       const items = getItemsList()
-        .filter(item => item.type === 'item' || item.type === 'scrying_mirror' || item.type === 'compass')
-        // .filter(item => !item.obtained)
-        // .filter(item => item.locatedIn?.[0] && item.locatedIn[0] > 0)
+        .filter(item => showing === 'items' ? (
+          item.type === 'item' || item.type === 'scrying_mirror' || item.type === 'compass'
+        ) : (
+          item.type === 'key' && !item.code.startsWith('GUEST') && item.locatedIn?.[0] && item.locatedIn[0] > 0
+        ))
       
       const leftTableRows = createTable(items.slice(0, 19))
-      const hint = document.createElement('tr')
-      Object.assign(hint.style, {
+      const hint1 = document.createElement('div')
+      const hintStyle = {
         fontWeight: 'bold',
-        marginTop: '16px',
+        marginTop: '4px',
         padding: '4px 6px',
         background: '#fff',
         color: '#000',
         textShadow: 'none'
+      }
+      Object.assign(hint1.style, hintStyle)
+      hint1.innerHTML = '<td colspan="3">Press E to hide this list</td>'
+      const hint2 = document.createElement('div')
+      Object.assign(hint2.style, hintStyle)
+      hint2.innerHTML = `<td colspan="3">Press K to ${showing === 'items' ? 'show keys' : 'show items'}</td>`
+      const hints = document.createElement('tr')
+      Object.assign(hints.style, {
+        display: 'flex',
+        flexDirection: 'row',
+        gap: '4px'
       })
-      hint.innerHTML = '<td colspan="3">Press E to hide this list</td>'
+      hints.append(hint1, hint2)
+
       const leftTable = document.createElement('table')
       leftTable.style.borderCollapse = 'collapse'
-      leftTable.append(...leftTableRows, hint)
+      leftTable.append(...leftTableRows, hints)
 
       const rightTableRows = createTable(items.slice(19))
       const rightTable = document.createElement('table')
@@ -89,19 +106,25 @@ export function initItemsList() {
 
         let itemImg
         if(item.type === 'item') itemImg = `media/gfx/IP/I-${item.index}.png`
+        if(item.type === 'key') itemImg = 'media/gfx/IP/I-KEY.png'
         else if (item.type === 'compass') itemImg = 'media/gfx/ColCompA.png'
         else if (item.type === 'scrying_mirror') itemImg = 'media/gfx/ColMirror.png'
         
         const itemStyles = 'vertical-align: middle; margin-right: 6px;'
         const spanStyle = item.obtained ? 'text-decoration: line-through;' : ''
-        listItem.innerHTML = `<td><img src="${itemImg}" width="32" style="${itemStyles}" /><span style="${spanStyle}">${item.name}</span?</td><td>${item.obtained ? '-' : item.locatedIn?.[0]}</td>`
+        listItem.innerHTML = `<td><img src="${itemImg}" width="32" style="${itemStyles}" /><span style="${spanStyle}">${item.name ?? `Key for room №${item.keyForRoom}`}</span?</td><td>${item.obtained ? '-' : (item.locatedIn?.[0] ?? '')}</td>`
         rows.push(listItem)
       }
 
-      return rows
+      const placeholderRows = rows.length < 19 
+        ? new Array(19 - rows.length).fill(null).map(() => {
+          const placeholderRow = document.createElement('tr')
+          placeholderRow.innerHTML = '<td>&nbsp;</td><td>&nbsp;</td>'
+          placeholderRow.style.height = '34px'
+          return placeholderRow
+        }) : []
+      return rows.concat(...placeholderRows)
     }
-
-    let itemsListVisible = false
 
     const showHideItemsList = () => {
       if (itemsListVisible) {
@@ -118,6 +141,10 @@ export function initItemsList() {
     document.addEventListener('keydown', (event) => {
       if (event.which === Key.E) {
         showHideItemsList()
+      } else if(event.which === Key.K && itemsListVisible) {
+        showing = showing === 'items' ? 'keys' : 'items'
+        list.innerHTML = ''
+        updateItemsList()
       }
     })
   } catch (e) {

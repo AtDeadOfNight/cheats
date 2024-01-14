@@ -36,4 +36,5 @@ Controls:
 Shows you list of obtainable items, keys, scrying mirrors and compasses with their locations.
 
 Controls: 
-- Press `E` key to make it appear or hide
+- Press `E` key to show or hide
+- Press `K` key to switch between items/keys
