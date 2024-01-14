@@ -8,6 +8,7 @@ Unofficial At Dead of Night game cheats.
   - [Install](#install)
   - [Features](#features)
     - [Radar](#radar)
+    - [Items list](#items-list)
 
 ## Install
 
@@ -27,5 +28,12 @@ Unofficial At Dead of Night game cheats.
 Minimap that helps you keep track your's and Jimmy's position and sight direction on current floor. Shows friends that are not rescued yet. Shows Jimmy's floor if it's not the same. Shows whether Jimmy is in the same room with you or left.
 
 Controls:
-Press `-` key to make it smaller or hide
-Press `+` key to make it appear or bigger
+- Press `-` key to make it smaller or hide
+- Press `+` key to make it appear or bigger
+
+### Items list
+
+Shows you list of obtainable items, keys, scrying mirrors and compasses with their locations.
+
+Controls: 
+- Press `I` key to make it appear or hide

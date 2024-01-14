@@ -1,5 +1,6 @@
 import { floors } from '@/data.js'
 import { onPropertyChange } from '@/utils/index.js'
+import { Key } from 'ts-keycode-enum'
 
 export function initRadar() {
   try {
@@ -395,13 +396,13 @@ export function initRadar() {
     changeFloors()
 
     document.addEventListener('keydown', (event) => {
-      if(event.key === '=') {
+      if(event.which === Key.Equals) {
         if(currentRadarScale === 'hide') {
           scaleRadar('mini')
         } else if(currentRadarScale === 'mini') {
           scaleRadar('full')
         }
-      } else if(event.key === '-') {
+      } else if (event.which === Key.Dash) {
         if (currentRadarScale === 'full') {
           scaleRadar('mini')
         } else if (currentRadarScale === 'mini') {

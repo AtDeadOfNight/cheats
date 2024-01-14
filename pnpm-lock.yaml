@@ -46,6 +46,9 @@ devDependencies:
   eslint:
     specifier: ^8.8.0
     version: 8.56.0
+  ts-keycode-enum:
+    specifier: ^1.0.6
+    version: 1.0.6
   typescript:
     specifier: ^5.1.6
     version: 5.3.3
@@ -2185,6 +2188,10 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       escape-string-regexp: 5.0.0
+    dev: true
+
+  /ts-keycode-enum@1.0.6:
+    resolution: {integrity: sha512-DF8+Cf/FJJnPRxwz8agCoDelQXKZWQOS/gnnwx01nZ106tPJdB3BgJ9QTtLwXgR82D8O+nTjuZzWgf0Rg4vuRA==}
     dev: true
 
   /tslib@1.14.1:

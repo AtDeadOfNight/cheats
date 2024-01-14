@@ -9,4 +9,5 @@ interface Window {
   stairs: number
   guestrooms: [number, number, number, number, number]
   guestsin: [(0 | 1), (0 | 1), (0 | 1), (0 | 1), (0 | 1)]
+  itemlist: (number | string | object)[]
 }
