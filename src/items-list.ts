@@ -9,23 +9,25 @@ export function initItemsList() {
     Object.assign(list.style, {
       display: 'flex',
       flexDirection: 'row',
-      gap: '8px'
+      gap: '16px'
     })
     Object.assign(itemsListContainer.style, {
       position: 'absolute',
       top: '50%',
       left: '50%',
       transform: 'translate(-50%, -50%)',
-      width: '75vw',
-      height: '75vh',
-      background: 'rgba(0, 0, 0, 0.65)',
+      width: '1152px',
+      height: '750px',
+      background: 'rgba(0, 0, 0, 0.8)',
       padding: '32px',
       color: '#fff',
-      font: '18px subs',
+      font: '19px subs',
       zIndex: 1001,
       letterSpacing: 'normal',
       display: 'none',
-      pointerEvents: 'none'
+      pointerEvents: 'none',
+      overflow: 'hidden',
+      boxSizing: 'border-box',
     })
     itemsListContainer.id = 'items-list-container'
     itemsListContainer.appendChild(list)
@@ -37,23 +39,31 @@ export function initItemsList() {
         // .filter(item => !item.obtained)
         // .filter(item => item.locatedIn?.[0] && item.locatedIn[0] > 0)
       
-      const leftTableRows = createTable(items.slice(0, 18))
+      const leftTableRows = createTable(items.slice(0, 19))
       const hint = document.createElement('tr')
-      hint.style.fontWeight = 'bold'
-      hint.style.paddingTop = '8px'
+      Object.assign(hint.style, {
+        fontWeight: 'bold',
+        marginTop: '16px',
+        padding: '4px 6px',
+        background: '#fff',
+        color: '#000',
+        textShadow: 'none'
+      })
       hint.innerHTML = '<td colspan="3">Press E to hide this list</td>'
       const leftTable = document.createElement('table')
+      leftTable.style.borderCollapse = 'collapse'
       leftTable.append(...leftTableRows, hint)
 
-      const rightTableRows = createTable(items.slice(18))
+      const rightTableRows = createTable(items.slice(19))
       const rightTable = document.createElement('table')
+      rightTable.style.borderCollapse = 'collapse'
       rightTable.append(...rightTableRows)
       
       const divider = document.createElement('div')
       Object.assign(divider.style, {
-        height: '100%',
+        height: '690px',
         width: '1px',
-        background: '#fff',
+        background: '#ccc',
       })
 
       list.append(leftTable, divider, rightTable)
@@ -63,11 +73,12 @@ export function initItemsList() {
       const rows: HTMLTableRowElement[] = []
 
       const header = document.createElement('tr')
-      header.innerHTML = '<th align="left">Item</th><th align="left">Type</th><th align="left">Location room №</th>'
-      header.style.paddingBottom = '8px'
-      header.style.border = '1px solid #fff'
-      header.style.borderWidth = '0px'
-      header.style.borderBottomWidth = '1px'
+      header.innerHTML = '<th align="left">Item</th><th align="left">Location room №</th>'
+      Object.assign(header.style, {
+        paddingBottom: '8px',
+        borderBottom: '1px solid #fff',
+
+      })
       rows.push(header)
 
       for (const item of rowsData) {
@@ -75,9 +86,15 @@ export function initItemsList() {
         if(item.obtained) {
           listItem.style.color = '#9c9c9c'
         }
-        const itemImg = `media/gfx/IP/I-${item.index}.png`
-        const itemStyles = 'vertical-align: middle; margin-right: 4px;'
-        listItem.innerHTML = `<td><img src="${itemImg}" width="32" style="${itemStyles}" />${item.name}</td><td>${item.type}</td><td>${item.obtained ? '-' : item.locatedIn?.[0]}</td>`
+
+        let itemImg
+        if(item.type === 'item') itemImg = `media/gfx/IP/I-${item.index}.png`
+        else if (item.type === 'compass') itemImg = 'media/gfx/ColCompA.png'
+        else if (item.type === 'scrying_mirror') itemImg = 'media/gfx/ColMirror.png'
+        
+        const itemStyles = 'vertical-align: middle; margin-right: 6px;'
+        const spanStyle = item.obtained ? 'text-decoration: line-through;' : ''
+        listItem.innerHTML = `<td><img src="${itemImg}" width="32" style="${itemStyles}" /><span style="${spanStyle}">${item.name}</span?</td><td>${item.obtained ? '-' : item.locatedIn?.[0]}</td>`
         rows.push(listItem)
       }
 
