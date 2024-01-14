@@ -33,6 +33,8 @@ Controls:
 
 ### Items list
 
+<img width="1399" alt="image" src="https://github.com/AtDeadOfNight/cheats/assets/59040542/74a9469c-6c51-4a8e-92a0-e18cb21fd723">
+
 Shows you list of obtainable items, keys, scrying mirrors and compasses with their locations.
 
 Controls: 
