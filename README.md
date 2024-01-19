@@ -9,6 +9,7 @@ Unofficial At Dead of Night game cheats.
   - [Features](#features)
     - [Radar](#radar)
     - [Items list](#items-list)
+    - [WallHack](#wallhack)
 
 ## Install
 
@@ -40,3 +41,7 @@ Shows you list of obtainable items, keys, scrying mirrors and compasses with the
 Controls: 
 - Press `E` key to show or hide
 - Press `K` key to switch between items/keys
+
+### WallHack
+
+Allows you to see Jimmy silhouette through walls.
