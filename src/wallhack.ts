@@ -11,12 +11,15 @@ const cameraMode: 'top' | 'first-person' = 'first-person'
 export function initWallHack() {
   try {
     const scene = new THREE.Scene()
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000)
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 10000)
     
     if (cameraMode === 'top') {
       camera.position.y = 1000
       camera.rotation.x = - (90 * Math.PI / 180)
     }
+
+    camera.rotation.order = 'YXZ'
+    camera.rotation.x = -10 * Math.PI / 180
     
     const renderer = new THREE.WebGLRenderer({ alpha: true })
     renderer.setSize(window.innerWidth, window.innerHeight)
@@ -51,7 +54,7 @@ export function initWallHack() {
     loader.load('cheats/assets/jimmy-model.glb', function (gltf) {
       const jimmyMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 })
       jimmy = gltf.scene
-      jimmy.position.y = 25 + 25 / 2
+      jimmy.position.y = 25 / 2
       jimmy.scale.set(10, 10, 10)
       jimmy.traverse((child) => {
         if (child instanceof THREE.Mesh) {
@@ -68,7 +71,7 @@ export function initWallHack() {
     // const scenePlane = new THREE.Mesh(scenePlaneGeometry, scenePlaneMaterial)
     // scene.add(scenePlane)
     
-    player.position.y = 0
+    player.position.y = 50
     window.wallhack = { camera: camera }
 
     function animate() {
