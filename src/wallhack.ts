@@ -1,5 +1,5 @@
 /* eslint-disable no-inner-declarations */
-import { floors } from '@/data.js'
+import { Point, floors } from '@/data.js'
 import { onPropertyChange } from '@/utils/index.js'
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
@@ -72,7 +72,7 @@ export function initWallHack() {
     // scene.add(scenePlane)
     
     player.position.y = 50
-    window.wallhack = { camera: camera }
+    window.wallhack = { camera: camera, player }
 
     function animate() {
       requestAnimationFrame(animate)
@@ -125,7 +125,10 @@ export function initWallHack() {
       transition(player.position, 'z', point.y)
       const rotationDir = { 'N': 180, 'E': 90, 'W': 270, 'S': 0 }
       const currentAngle = player.rotation.y
-      const targetAngle = rotationDir[dir] * Math.PI / 180
+      const viewAngle = 'rotation' in point
+        ? ((point as Point).rotation?.[dir] ?? rotationDir[dir])
+        : rotationDir[dir]
+      const targetAngle = viewAngle * Math.PI / 180
       const angleDiff = shortestAngleDiff(targetAngle, currentAngle)
       transition(player.rotation, 'y', currentAngle + angleDiff)
       transition(camera.rotation, 'y', currentAngle + angleDiff)

@@ -12,5 +12,6 @@ interface Window {
   itemlist: (number | string | object)[]
   wallhack: {
     camera: THREE.PerspectiveCamera
+    player: THREE.Mesh
   }
 }
