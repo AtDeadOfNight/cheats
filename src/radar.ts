@@ -396,13 +396,13 @@ export function initRadar() {
     changeFloors()
 
     document.addEventListener('keydown', (event) => {
-      if(event.which === Key.Equals) {
+      if(event.code === 'Equals') {
         if(currentRadarScale === 'hide') {
           scaleRadar('mini')
         } else if(currentRadarScale === 'mini') {
           scaleRadar('full')
         }
-      } else if (event.which === Key.Dash) {
+      } else if (event.code === 'Minus') {
         if (currentRadarScale === 'full') {
           scaleRadar('mini')
         } else if (currentRadarScale === 'mini') {
